@@ -1,0 +1,6 @@
+flask
+gunicorn
+pytz
+requests
+flask
+cloudinary

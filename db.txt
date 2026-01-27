@@ -1,0 +1,12 @@
+# khusus news ( akun media kuning )
+mongodb+srv://farhans:ikoo@web.do21pri.mongodb.net/?appName=web
+pw : ikoo
+
+# khusus conf, nontif ( akun santridong )
+mongodb+srv://ikoo:farhans@web2.ndwn5ag.mongodb.net/?appName=web2
+pw : farhans
+
+# khusus galery ( akun rafa )
+mongodb+srv://farfar:hanshans@web3.hg8xpqu.mongodb.net/?appName=web3
+pw : hanshans
+
