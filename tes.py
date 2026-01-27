@@ -495,5 +495,3 @@ def evfcrv():
 def page_not_found(e):
     return render_template('mainten.html'), 404
 
-if __name__ == '__main__':
-    a.run(host='0.0.0.0', port=7000, debug=True)
