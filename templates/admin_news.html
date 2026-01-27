@@ -1,0 +1,84 @@
+// {% extends "base.html" %}
+{% block title %}Admin Berita - PPM Manggisan{% endblock %}
+
+{% block style %}
+<style>
+  .container-admin {
+    max-width: 1100px;
+    margin: 40px auto 60px;
+    padding: 20px;
+  }
+  .header-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h2 {
+    color:#222;
+  }
+  button.btn-new {
+    background: #f9b233;
+    border: none;
+    padding: 10px 18px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button.btn-new:hover {
+    background: #d19b13;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 28px;
+  }
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background: #f5f5f5;
+  }
+  a.edit-link {
+    color: #f9b233;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  a.edit-link:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-admin">
+  <div class="header-admin">
+    <h2>Daftar Berita</h2>
+    <button class="btn-new" onclick="location.href='{{ url_for('new_news') }}'">+ Berita Baru</button>
+  </div>
+
+  {% if news_list %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID Berita</th>
+        <th>Judul</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for news in news_list %}
+      <tr>
+        <td>{{ news.id }}</td>
+        <td>{{ news.title|safe }}</td>
+        <td><a href="{{ url_for('edit_news', news_id=news.id) }}" class="edit-link">Edit</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>Belum ada berita yang diupload.</p>
+  {% endif %}
+</div>
+{% endblock %}

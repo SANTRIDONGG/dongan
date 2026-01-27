@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PONPES ROUDLATUL ULUM</title>
+
+  <!-- Font Awesome CDN untuk icon FAB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&display=swap" rel="stylesheet" />
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  rel="stylesheet"
+/>
+{% include 'css.html'%}
+  <!-- Google Fonts Scheherazade (Arab) -->
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&display=swap" rel="stylesheet" />
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const sidebar = document.getElementById("mobileSidebar");
+  const toggle = document.getElementById("mobileToggle");
+  const close = document.getElementById("sidebarClose");
+
+  // open sidebar
+  toggle.onclick = () => sidebar.classList.add("active");
+
+  // close sidebar
+  close.onclick = () => sidebar.classList.remove("active");
+
+  // Dropdown
+  document.querySelectorAll(".has-dropdown").forEach((dropdown) => {
+    dropdown.querySelector(".dropdown-btn").onclick = (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle("open");
+    };
+  });
+
+});
+</script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const sidebar = document.getElementById('mobileSidebar');
+    const toggleBtn = document.getElementById('mobileToggle');
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    } else {
+        console.log("mobileToggle NOT FOUND");
+    }
+});
+
+
+// Dropdown inside sidebar
+document.querySelectorAll('#mobileSidebar li').forEach(li => {
+  li.addEventListener('click', function (e) {
+    if (this.querySelector('ul')) {
+      e.preventDefault();
+      this.classList.toggle('open');
+    }
+  });
+});
+</script>
+
+<body>
+ <!-- Tambahkan library FontAwesome jika pakai icon -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  rel="stylesheet"
+/>
+{% include 'nav.html' %}
+
+
+<section class="hero">
+  <div class="arabic-text">اَلْمَعْهَدُ الْإِسْلَامِيُّ السَّلَفِيُّ رَوْضَةُ الْعُلُومِ</div>
+  <h1>PONPES ROUDLOTUL ULUM</h1>
+  <h3>KARANGTANJUNG ALIAN KEBUMEN JAWA TENGAH</h3>
+
+  <div class="psb-box" tabindex="0" role="button" aria-label="PSB Online Registration" onclick="location.href='#';">
+    <i class="fas fa-user psb-icon" aria-hidden="true"></i>
+    <h2>PSB ONLINE</h2>
+    <p>Pendaftaran Santri Baru 2025</p>
+  </div>
+</section>
+
+<!-- Tambahkan section berita ini langsung setelah section hero di HTML Anda -->
+<section class="news-section" aria-label="Berita Terkini">
+  <div class="container">
+    <div class="news-header">
+      <span class="section-subtitle">BERITA</span>
+      <h2 class="section-title">BERITA TERKINI</h2>
+    </div>
+
+    <div class="news-grid">
+      <!-- Item Berita 1 -->
+      <article class="news-card" tabindex="0" role="article" aria-label="Berita Upaya Mewujudkan Lingkungan Sehat Ponpes">
+        <div class="news-img-wrapper">
+          <img src="{{ ns.n1.content.cover }}" alt="Upaya Mewujudkan Lingkungan Sehat " />
+        </div>
+        <h3 class="news-title"><a style="color: black; text-decoration: none;" href='/news/{{ ns.n1.idpost }}'>{{ ns.n1.content.title.upper() }}</a></h3>
+        <p class="news-desc">{{ cplk(ns.n1.content.isi)|safe}}</p>
+        <div class="news-meta">
+          <span><i class="fa-solid fa-user"></i> Admin</span>
+          <span><i class="fa-regular fa-calendar"></i> {{ ns.n1.content.date }}</span>
+        </div>
+      </article>
+
+      <!-- Item Berita 2 -->
+      <article class="news-card" tabindex="0" role="article" aria-label="Berita Tim Asesor Majelis Masyayikh">
+        <div class="news-img-wrapper">
+          <img src="{{ ns.n2.content.cover }}" alt="Tim Asesor Majelis Masyayikh Melaksanakan Visitasi" />
+        </div>
+        <h3 class="news-title"><a style="color: black; text-decoration: none;" href='/news/{{ ns.n2.idpost }}'>{{ ns.n2.content.title.upper() }}</a></h3>
+        <p class="news-desc">{{ cplk(ns.n2.content.isi)|safe}}</p>
+        <div class="news-meta">
+          <span><i class="fa-solid fa-user"></i> Admin</span>
+          <span><i class="fa-regular fa-calendar"></i> {{ ns.n2.content.date }}</span>
+        </div>
+      </article>
+
+      <!-- Item Berita 3 -->
+      <article class="news-card" tabindex="0" role="article" aria-label="Berita Seminar Nasional dan Pelantikan BEM">
+        <div class="news-img-wrapper">
+          <img src="{{ ns.n3.content.cover }}" alt="Seminar Nasional dan Pelantikan BEM Mahad Aly" />
+        </div>
+        <h3 class="news-title"><a style="color: black; text-decoration: none;" href='/news/{{ ns.n3.idpost }}'>{{ ns.n3.content.title.upper() }}</a></h3>
+        <p class="news-desc">{{ cplk(ns.n3.content.isi)|safe}}</p>
+        <div class="news-meta">
+          <span><i class="fa-solid fa-user"></i> Admin</span>
+          <span><i class="fa-regular fa-calendar"></i> {{ ns.n3.content.date }}</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="about-section" aria-label="Tentang Kami">
+  <div class="container about-container">
+    <div class="about-video">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/1XmpQ2-hbz4?si=sry21oMZ1V76gUZ9" 
+        title="Profile Pondok Pesantren Roudlatul ulum" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="about-text">
+      <span class="section-subtitle about-subtitle">TENTANG</span>
+      <h2 class="section-title about-title">TENTANG KAMI</h2>
+      <p>
+        Selamat datang di website Al-Ma’had al-Islami as-Salafi Roudlotul Ulum.
+Website ini disediakan untuk memudahkan para wali santri dan masyarakat dalam memperoleh informasi terbaru tentang kegiatan dan perkembangan ma’had.
+
+Dengan motto <strong>“Ilmiyah – Amaliyah – Amaliyah – Ilmiyah”</strong>, Al-Ma’had al-Islami as-Salafi Roudlotul Ulum berkomitmen meningkatkan kualitas pendidikan santri melalui berbagai jenjang pendidikan, mulai dari SMP, SMK, hingga Perguruan Tinggi. Setiap kegiatan pembelajaran diarahkan agar ilmu dapat diamalkan dengan benar sesuai tuntunan syar’i.
+
+Semoga seluruh ikhtiar ini menjadi langkah meraih ridha Allah SWT.      </p>
+    </div>
+  </div>
+</section>
+<section class="profile-section" aria-label="Profil Pondok Pesantren Roudlatul Ulum">
+  <div class="container profile-container">
+    <div class="profile-text">
+      <h2>PROFIL<br />PONDOK PESANTREN<br />ROUDLATUL ULUM</h2>
+      <div class="arabic-profile">اَلْمَعْهَدُ الْإِسْلَامِيُّ السَّلَفِيُّ رَوْضَةُ الْعُلُومِ</div>
+      <em class="subtitle-profile">'Ilmiyyah 'Amaliyyah, 'Amaliyyah Ilmiyyah </em>
+      <button onclick='window.location.href = `/ppdb`;' class="btn-detail" aria-label="Selengkapnya Profil">Selengkapnya</button>
+    </div>
+    <div class="profile-image">
+      <img 
+        src="/public/2.jpg" 
+        alt="Gedung Pondok Pesantren Roudlatul Ulum"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+<section class="social-media-section" aria-label="Sosial Media Kami">
+  <div class="container social-container">
+    <div class="social-header">
+      <span class="section-subtitle social-subtitle">SOSIAL MEDIA</span>
+      <h2 class="section-title social-title">SOSIAL MEDIA KAMI</h2>
+    </div>
+
+    <div class="social-grid">
+      <!-- Sosial Media Card 1 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram ponpes_manggisan">
+        <div class="social-icon">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </div>
+        <h3>roudlotululum_karangtanjung</h3>
+        <p>Ikuti kami di Instagram <strong><a style="color: orange; text-decoration: none;" href="https://Instagram.com/roudlotululum_karangtanjung">roudlotululum_karangtanjung</a></strong> untuk update informasi terbaru</p>
+      </div>
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram ponpes_manggisan">
+        <div class="social-icon">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </div>
+        <h3>roudlotululum_putri</h3>
+        <p>Ikuti kami di Instagram <strong><a style="color: orange; text-decoration: none;" href="https://www.instagram.com/roudlotululum_putri">roudlotululum_putri</a></strong> untuk update informasi terbaru</p>
+      </div>
+      <!-- Sosial Media Card 2 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram santri_manggisan">
+        <div class="social-icon">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </div>
+        <h3>santridongg.id</h3>
+        <p>Ikuti kami di Instagram <strong><a style="color: orange; text-decoration: none;" href="https://Instagram.com/santridongg.id">santridongg.id</a></strong> untuk update video terbaru</p>
+      </div>
+      <!-- Sosial Media Card 2 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram santri_manggisan">
+        <div class="social-icon">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </div>
+        <h3>Mediasantri.id</h3>
+        <p>Ikuti kami di Instagram <strong><a style="color: orange; text-decoration: none;" href="https://www.instagram.com/media.santri.id">media.santri.id</a></strong> untuk update video terbaru</p>
+      </div>
+      <!-- Sosial Media Card 3 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram mahadaly_almubaarok">
+        <div class="social-icon">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </div>
+        <h3>mahadaly_almubaarok</h3>
+        <p>Ikuti kami di Instagram <strong>mahadaly_almubaarok</strong> untuk update informasi terbaru</p>
+      </div>
+      <!-- Sosial Media Card 4 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram mahadaly_almubaarok">
+        <div class="social-icon">
+          <i class="fab fa-youtube" aria-hidden="true"></i>
+        </div>
+        <h3>Media Roudlatul Ulum</h3>
+        <p>Ikuti kami di youtube <strong><a style="color: orange; text-decoration: none;" href="https://www.youtube.com/@mediaroudlatululum6018">media roudlotul ulum</a></strong> untuk update informasi terbaru</p>
+      </div>
+      <!-- Sosial Media Card 5 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram mahadaly_almubaarok">
+        <div class="social-icon">
+          <i class="fab fa-tiktok" aria-hidden="true"></i>
+        </div>
+        <h3>Roudlatul Ulum</h3>
+        <p>Ikuti kami di tiktok <strong><a style="color: orange; text-decoration: none;" href="https://www.tiktok.com/@roudlotululum1983">roudlotululum_karangtanjung</a></strong> untuk update informasi terbaru</p>
+      </div>
+      <!-- Sosial Media Card 6 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram mahadaly_almubaarok">
+        <div class="social-icon">
+          <i class="fab fa-tiktok" aria-hidden="true"></i>
+        </div>
+        <h3>Media Santri Pi</h3>
+        <p>Ikuti kami di tiktok <strong><a style="color: orange; text-decoration: none;" href="https://www.tiktok.com/@medisantri.id">Media santri.id</a></strong> untuk update informasi terbaru</p>
+      </div>
+      <!-- Sosial Media Card 7 -->
+      <div class="social-card" tabindex="0" role="region" aria-label="Instagram mahadaly_almubaarok">
+        <div class="social-icon">
+          <i class="fab fa-tiktok" aria-hidden="true"></i>
+        </div>
+        <h3>Santridongg.id</h3>
+        <p>Ikuti kami di tiktok <strong><a style="color: orange; text-decoration: none;" href="https://www.tiktok.com/@santridongg">Santridongg.id</a></strong> untuk update video terbaru</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="data-stats-section animated-section" aria-label="Data Statistik Ponpes Roudlatul Ulum">
+  <div class="container data-stats-container">
+    <div class="data-image">
+      <img 
+        src="/public/y.JPG" 
+        alt="Gedung Pondok Pesantren Roudlatul Ulum dengan santri" 
+        loading="lazy"
+      />
+    </div>
+    <div class="data-content">
+      <h2>Data Statistik Ponpes Roudlatul Ulum</h2>
+      <p>Berikut beberapa data statistik Pondok Pesantren Roudlatul Ulum Karangtanjung sejak awal berdiri sampai sekarang.</p>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <i class="fa-regular fa-calendar stat-icon" aria-hidden="true"></i>
+          <div class="stat-number" data-target="1983">0</div>
+          <p><strong>Tahun Berdiri</strong> Pondok Pesantren Roudlatul Ulum Karangtanjung.</p>
+        </div>
+        <div class="stat-item">
+          <i class="fa-solid fa-user stat-icon" aria-hidden="true"></i>
+          <div class="stat-number" data-target="1017">0</div>
+          <p><strong>Jumlah Santri</strong> Pondok Pesantren Roudlatul Ulum Karangtanjung.</p>
+        </div>
+        <div class="stat-item">
+          <i class="fa-solid fa-users stat-icon" aria-hidden="true"></i>
+          <div class="stat-number" data-target="1176">0</div>
+          <p><strong>Jumlah Alumni</strong> Pondok Pesantren Roudlatul Ulum Karangtanjung.</p>
+        </div>
+        <div class="stat-item">
+          <i class="fa-solid fa-graduation-cap stat-icon" aria-hidden="true"></i>
+          <div class="stat-number" data-target="3">0</div>
+          <p><strong>Model Pendidikan</strong> di Pondok Pesantren Roudlatul Ulum Karangtanjung.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="quote-section" aria-label="Quote Pondok Pesantren Roudlatul Ulum">
+  <div class="quote-slider">
+    <button class="slide-btn prev-btn" aria-label="Previous Quote">&#10094;</button>
+    <button class="slide-btn next-btn" aria-label="Next Quote">&#10095;</button>
+
+    <div class="slides-container">
+      <!-- Slide 1 -->
+      <div class="slide active" role="group" aria-roledescription="slide" aria-label="Quote 1">
+        <img class="slide-photo" src="https://user-images.githubusercontent.com/103855414/272110789-4a916026-225c-40d1-9366-d7fffc41f3a6.jpg" alt="KH. Nur Hidayatullah" />
+        <h3>KH. Nur Hidayatulloh</h3>
+        <p class="subtitle">Pengasuh PP Roudlatul Ulum</p>
+        <p class="quote-text">
+          <span class="quote-icon">&#10077;</span>
+          Janganlah kamu berbahagia ketika kamu sudah bisa taat kepada Alloh, <em>berbahagialah</em> karena Alloh telah memberimu untuk bisa taat kepadanya.
+          <span class="quote-icon">&#10078;</span>
+        </p>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="Quote 2">
+        <img class="slide-photo" src="https://user-images.githubusercontent.com/103855414/272110788-9844ee33-8f7d-4179-9988-f6a0a9d15cf1.jpg" alt="Ny. Hj. Nur Farida Hidayat" />
+        <h3>Ny. Hj. Nur Farida Hidayat</h3>
+        <p class="subtitle">Pengasuh PP Roudlatul Ulum</p>
+        <p class="quote-text">
+          <span class="quote-icon">&#10077;</span>
+          Orang yang banyak bicara bukan pertanda orang tersebut pintar, orang pintar adalah orang yang memiliki cahaya pada hatinya.
+          <span class="quote-icon">&#10078;</span>
+        </p>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="Quote 3">
+        <img class="slide-photo" src="https://user-images.githubusercontent.com/103855414/272110786-5c218b41-f378-4fd7-b763-c98aadcd2f3a.jpg" alt="KH. Nur Nafiudin" />
+        <h3>KH. Nur Nafiudin</h3>
+        <p class="subtitle">Pengasuh PP Roudlatul Ulum</p>
+        <p class="quote-text">
+          <span class="quote-icon">&#10077;</span>
+          Dengan ilmu dan amal kita jadikan pondasi kokoh menuju ridha Allah SWT.
+          <span class="quote-icon">&#10078;</span>
+        </p>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="Quote 4">
+        <img class="slide-photo" src="https://user-images.githubusercontent.com/103855414/272110785-19709dba-6a61-4eed-bad2-ebb1d6e8a3e9.jpg" alt="KH. Abdurrahman" />
+        <h3>KH. Abdurrahman</h3>
+        <p class="subtitle">Pengasuh PP Roudlatul Ulum</p>
+        <p class="quote-text">
+          <span class="quote-icon">&#10077;</span>
+          Keikhlasan dalam menuntut ilmu adalah kunci utama keberkahan.
+          <span class="quote-icon">&#10078;</span>
+        </p>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="Quote 5">
+        <img class="slide-photo" src="https://user-images.githubusercontent.com/103855414/272110790-18215701-cb2a-4a81-9e36-3671546c832d.jpg" alt="KH. Muhammad Zaini" />
+        <h3>KH. Muhammad Zaini</h3>
+        <p class="subtitle">Pengasuh PP Roudlatul Ulum</p>
+        <p class="quote-text">
+          <span class="quote-icon">&#10077;</span>
+          Pendidikan adalah cahaya jalan bagi santri menuju kehidupan yang berkah.
+          <span class="quote-icon">&#10078;</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="dots-container" aria-label="Slide navigation">
+      <button class="dot active" aria-label="Pilih slide 1"></button>
+      <button class="dot" aria-label="Pilih slide 2"></button>
+      <button class="dot" aria-label="Pilih slide 3"></button>
+      <button class="dot" aria-label="Pilih slide 4"></button>
+      <button class="dot" aria-label="Pilih slide 5"></button>
+    </div>
+  </div>
+</section>
+  <!-- Section kosong di bawah hero -->
+  <section class="new-section" aria-label="New section content">
+    <!-- Konten baru bisa Anda tambahkan di sini nanti -->
+  </section>
+{% include 'footer.html' %}
+{% include 'script.html' %}
+</body>
+</html>

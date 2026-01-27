@@ -1,0 +1,11 @@
+// {% extends "base.html" %}
+{% block title %}Berita {{ idpage }} - PPM Manggisan{% endblock %}
+
+{% block content %}
+<section class="main-content" style="max-width: 900px; margin: auto; background: white; padding: 24px; border-radius:12px;">
+  <h2>Berita {{ idpage }}</h2>
+  <div>
+    {{ content|safe }}
+  </div>
+</section>
+{% endblock %}

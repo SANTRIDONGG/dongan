@@ -1,0 +1,105 @@
+<!-- NAVBAR DESKTOP + MOBILE -->
+<nav id="navbar">
+
+  <!-- Logo -->
+  <div class="logo">
+    <img src="/public/WM.png" alt="Logo PPM Karangtanjung" />
+  </div>
+
+  <!-- Mobile Toggle -->
+  <span id="mobileToggle" class="mobile-toggle">☰</span>
+
+  <!-- Desktop Menu -->
+  <ul class="menu">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/berita">Berita</a></li>
+
+    <li class="has-dropdown">
+      <button class="dropdown-toggle">Profil </button>
+      <ul class="dropdown-menu">
+        <li><a href="/profile/sejarah">Sejarah</a></li>
+        <li><a href="/profile/visi-misi">Visi & Misi</a></li>
+        <li><a href="#">Masyayikh</a></li>
+        <li><a href="/profile/struktur">Struktur</a></li>
+      </ul>
+    </li>
+
+    <li class="has-dropdown">
+      <button class="dropdown-toggle">Pendidikan </button>
+      <ul class="dropdown-menu">
+        <li><a href="/pendidikan/misriu">Misriu</a></li>
+        <li><a href="#">Musyawirin</a></li>
+        <li><a href="/pendidikan/formal">Formal</a></li>
+        <li><a href="#">Non Formal</a></li>
+      </ul>
+    </li>
+
+    <li><a href="/galery">Gallery</a></li>
+    <li><a href="#">Kontak Kami</a></li>
+  </ul>
+
+  <!-- Desktop PSB -->
+  <button onclick='window.location.href = `/ppdb`;' class="btn-psb">PSB Online</button>
+</nav>
+
+<!-- ========================= -->
+<!--      SIDEBAR MOBILE       -->
+<!-- ========================= -->
+
+<div id="mobileSidebar" class="mobile-sidebar">
+
+  <div class="sidebar-header">
+    <img src="/public/WM.png" class="sidebar-logo" alt="Logo">
+    <span id="sidebarClose" class="sidebar-close">✕</span>
+  </div>
+
+  <div class="sidebar-menu">
+
+    <div class="sidebar-card">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+    </div>
+
+    <div class="sidebar-card">
+      <a href="/berita"><i class="fas fa-newspaper"></i> Berita</a>
+    </div>
+
+    <div class="sidebar-card has-dropdown">
+      <button class="dropdown-btn">
+        <i class="fas fa-user-graduate"></i> Profil
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </button>
+      <ul class="dropdown-list">
+        <li><a href="/profile/sejarah">Sejarah</a></li>
+        <li><a href="/profile/visi-misi">Visi & Misi</a></li>
+        <li><a href="#">Masyayikh</a></li>
+        <li><a href="/profile/struktur">Struktur</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card has-dropdown">
+      <button class="dropdown-btn">
+        <i class="fas fa-school"></i> Pendidikan
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </button>
+      <ul class="dropdown-list">
+        <li><a href="/pendidikan/misriu">Misriu</a></li>
+        <li><a href="#">Musyawirin</a></li>
+        <li><a href="/pendidikan/formal">Formal</a></li>
+        <li><a href="#">Non Formal</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <a href="/galery"><i class="fas fa-image"></i> Gallery</a>
+    </div>
+
+    <div class="sidebar-card">
+      <a href="#"><i class="fas fa-phone"></i> Kontak Kami</a>
+    </div>
+
+    <a href="#" class="psb-button">
+      <i class="fas fa-user-plus"></i> PSB ONLINE
+    </a>
+
+  </div>
+</div>

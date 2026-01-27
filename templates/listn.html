@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal berita roudlatul ulum</title>
+
+  <!-- Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+  <!-- Quill CSS -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+<!-- Quill CSS -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill-auto-links@0.0.6/dist/quill-auto-links.min.js"></script>
+<!-- quill-image-resize-module JS -->
+<script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #333;
+    }
+
+    /* Container utama gabungan news + form */
+    .news-and-form-section {
+      max-width: 1180px;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      user-select: none;
+    }
+
+    /* Bagian kartu berita */
+    .news-cards-container {
+      flex: 1 1 600px;
+      min-width: 320px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px 32px;
+    }
+
+    .news-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow:
+        0 0 25px 10px rgba(0,0,0,0.05),
+        inset 0 0 30px 5px rgba(255,255,255,0.75);
+      padding: 24px 24px 30px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+    .news-card:hover,
+    .news-card:focus-visible {
+      box-shadow:
+        0 6px 25px 6px rgba(0,0,0,0.12),
+        inset 0 0 80px 6px rgba(255,255,255,0.85);
+      outline: none;
+    }
+
+    .news-image-wrapper {
+      width: 100%;
+      height: 220px;
+      margin-bottom: 22px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: inset 0 0 20px 10px #d5d5d52b;
+    }
+    .news-image-wrapper img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      user-select: none;
+    }
+
+    .news-title {
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 10px;
+      line-height: 1.3;
+      color: #0F615C;
+    }
+
+    .news-description {
+      font-weight: 400;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    .news-meta {
+      display: flex;
+      gap: 24px;
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+    }
+    .news-meta i {
+      margin-right: 6px;
+      color: #bbc0c8;
+      user-select: none;
+    }
+
+    /* Bagian form */
+    .form-container {
+      flex: 1 1 480px;
+      min-width: 320px;
+      background: white;
+      padding: 40px 45px;
+      border-radius: 12px;
+      box-shadow:
+        0 8px 16px rgb(0 0 0 / 0.1);
+      user-select: none;
+    }
+    .form-container h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #222;
+      user-select: none;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #222222;
+      display: block;
+      margin-bottom: 10px;
+      user-select: none;
+    }
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      min-height: 48px;
+      font-size: 16px;
+      padding: 8px 15px;
+      border: 1.7px solid #ddd;
+      border-radius: 8px;
+      box-shadow:
+        inset 0 0 6px 2px #f8f8f866;
+      outline-offset: 2px;
+      transition: all 0.2s ease-in-out;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    input[type="text"]:focus,
+    input[type="file"]:focus {
+      border-color: #f9b233;
+      box-shadow:
+        0 0 10px 1px #f9b233cc;
+    }
+    #toolbar {
+      background: #fff;
+      border-radius: 8px 8px 0 0;
+      border: 1.7px solid #ddd;
+      border-bottom: none;
+      padding: 8px 12px;
+      user-select: none;
+    }
+    #editor-container {
+      height: 300px;
+      border: 1.7px solid #ddd;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      font-size: 16px;
+      font-family: inherit;
+      box-shadow:
+        inset 0 0 12px 3px #f8f8f866;
+      padding: 14px 16px;
+      overflow-y: auto;
+      background: #fff;
+      user-select: text;
+    }
+    .btn-post {
+      margin-top: 24px;
+      padding: 14px 28px;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: none;
+      background-color: #f9b233;
+      user-select: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: black;
+      display: inline-block;
+    }
+    .btn-post:hover,
+    .btn-post:focus-visible {
+      background-color: #d19b13;
+      outline: none;
+    }
+
+    /* Responsive */
+    @media(max-width: 940px) {
+      .news-and-form-section {
+        flex-direction: column;
+        gap: 30px;
+        padding: 40px 15px 60px;
+      }
+      .news-cards-container,
+      .form-container {
+        min-width: 100%;
+        flex-basis: 100%;
+      }
+      #editor-container {
+        height: 250px;
+      }
+    }
+
+    @media(max-width: 480px) {
+      .news-image-wrapper, .news-image-wrapper img {
+        height: 180px;
+      }
+      .news-title {
+        font-size: 18px;
+      }
+    }
+        /* Reset dan dasar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: #fefefe;
+      color: #333;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* --- NAVBAR (Pakailah navbar Anda sebelumnya, jangan diubah di sini) --- */
+    nav#navbar {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 15px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: transparent;
+      color: white;
+      z-index: 9999;
+      transition: background-color 0.3s ease;
+    }
+    nav#navbar.scrolled {
+      background-color: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+    nav#navbar .logo img {
+      height: 55px;
+      user-select: none;
+      cursor: pointer;
+    }
+    nav#navbar .menu {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      font-size: 16px;
+    }
+    nav#navbar .menu li {
+      position: relative;
+    }
+    nav#navbar .menu a,
+    nav#navbar .dropdown-toggle {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 5px 8px;
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: 16px;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    nav#navbar .menu a:hover,
+    nav#navbar .dropdown-toggle:hover,
+    nav#navbar .menu a.active {
+      color: #f9b233;
+    }
+    nav#navbar .dropdown-menu {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      background-color: #111;
+      border-radius: 5px;
+      min-width: 150px;
+      padding: 10px 0;
+      display: none;
+      z-index: 10000;
+      user-select: none;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+      transition: opacity 0.25s ease;
+    }
+    nav#navbar .dropdown-menu li {
+      padding: 8px 20px;
+    }
+    nav#navbar .dropdown-menu li a {
+      color: white;
+      font-weight: 400;
+    }
+    nav#navbar .dropdown-menu li:hover {
+      background-color: #222;
+    }
+    nav#navbar .has-dropdown.open > .dropdown-menu,
+    nav#navbar .has-dropdown:hover > .dropdown-menu {
+      display: block;
+    }
+    nav#navbar .dropdown-toggle:focus-visible {
+      outline: 2px solid #f9b233;
+      outline-offset: 3px;
+    }
+    nav#navbar .btn-psb {
+      border: 1.5px solid #f9b233;
+      background-color: transparent;
+      color: #f9b233;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 9px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3 ease;
+      user-select: none;
+    }
+    nav#navbar .btn-psb:hover {
+      background-color: #f9b233;
+      color: black;
+    }
+
+    /* Padding atas body supaya konten tidak tertutup navbar */
+    body {
+      padding-top: 75px;
+    }
+    
+    /* --- KONTEN UTAMA --- */
+    main.container {
+      max-width: 1150px;
+      margin: 40px auto 60px;
+      display: flex;
+      gap: 40px;
+      user-select: none;
+    }
+
+    /* Konten berita utama */
+    .main-content {
+      flex: 2.5;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+      padding: 30px 35px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      background-color: #f9f9f9;
+      padding: 14px 25px;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      font-size: 14px;
+      color: #666;
+      user-select: none;
+    }
+    .breadcrumb a {
+      color: #f9b233;
+      user-select: text;
+    }
+    .breadcrumb span {
+      margin: 0 5px;
+      user-select: none;
+    }
+
+    h1.post-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #222;
+      user-select: text;
+    }
+
+    /* Container untuk gambar dan post details, flex untuk letak berdampingan */
+    .post-image-wrapper {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    /* Gambar berita */
+    .post-image {
+      flex: 1 1 620px;
+      max-width: 620px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: inset 0 0 20px 5px #ccc;
+      user-select: none;
+      object-fit: cover;
+    }
+
+    /* Kotak Post Details statis di samping gambar (tidak overlay) */
+    .post-details {
+      flex: 1 1 260px;
+      background: white;
+      border-radius: 12px;
+      padding: 25px 22px;
+      box-shadow: 0 3px 15px rgb(0 0 0 / 0.08);
+      user-select: none;
+      font-size: 14px;
+      color: #444;
+      border: 1px solid #ddd;
+      /* Buat posisi normal, tidak overlay */
+      position: static;
+      min-width: 260px;
+      max-width: 260px;
+      height: fit-content;
+    }
+
+    .post-details h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 18px;
+      color: #222;
+      user-select: none;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 12px;
+    }
+    .post-details div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .post-details div i {
+      color: #f9b233;
+      min-width: 18px;
+    }
+
+    /* Isi teks berita */
+    .post-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #444;
+      white-space: pre-line;
+      user-select: text;
+    }
+
+    /* --- SIDEBAR --- */
+    aside.sidebar {
+      flex: 1;
+      max-width: 320px;
+      user-select: none;
+    }
+    aside.sidebar h3.sidebar-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    aside.sidebar h3.sidebar-title i {
+      color: #f9b233;
+      font-size: 24px;
+    }
+
+    /* Sidebar list berita terbaru */
+    .news-list {
+      list-style: none;
+      font-size: 14px;
+      color: #444;
+    }
+    .news-list li + li {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+    }
+    .news-list li a {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #444;
+      text-decoration: none;
+    }
+    .news-list img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 8px;
+      user-select: none;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 15px 4px #ddd;
+    }
+    .news-list .news-info {
+      flex: 1;
+      user-select: text;
+    }
+    .news-list .news-info p {
+      margin-bottom: 6px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #222;
+    }
+    .news-list .news-info time {
+      font-size: 12px;
+      color: #999;
+      user-select: text;
+    }
+
+    /* --- FOOTER (pakai footer Anda sendiri, tidak diubah di sini) --- */
+
+    /* Responsive */
+    @media (max-width: 940px) {
+      main.container {
+        flex-direction: column;
+        margin: 30px 15px 50px;
+      }
+      .main-content {
+        width: 100%;
+      }
+      aside.sidebar {
+        max-width: 100%;
+        margin-top: 40px;
+      }
+      .post-image-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+      .post-image {
+        max-width: 100%;
+      }
+      .post-details {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 25px;
+      }
+    }
+    .site-footer {
+  background-color: #222;
+  color: #ddd;
+  padding: 60px 20px 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+.footer-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.footer-about, .footer-links, .footer-contact {
+  flex: 1 1 260px;
+  min-width: 250px;
+}
+
+.footer-logo {
+  height: 50px;
+  margin-bottom: 12px;
+  user-select: none;
+  display: block;
+}
+
+.footer-about p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #bbb;
+  max-width: 320px;
+  user-select: text;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 18px;
+  color: #f9b233;
+  user-select: none;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 14px;
+  user-select: text;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover,
+.footer-links ul li a:focus-visible {
+  color: #f9b233;
+  outline: none;
+}
+
+.footer-contact p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  color: #bbb;
+  user-select: text;
+}
+
+.footer-bottom {
+  margin-top: 40px;
+  border-top: 1px solid #444;
+  padding-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .footer-about, .footer-links, .footer-contact {
+    min-width: 100%;
+  }
+}
+/*post mobile*/
+/* =========================================
+   MOBILE: PERBAIKI AREA TEKS
+   ========================================= */
+@media (max-width: 600px) {
+
+  /* Kurangi padding konten utama */
+  .main-content {
+    padding: 18px 18px !important;
+  }
+
+  /* Judul lebih kecil */
+  h1.post-title {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Perkecil teks isi berita */
+  .post-text {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Breadcrumb lebih kecil & padat */
+  .breadcrumb {
+    font-size: 12px !important;
+    padding: 10px 16px !important;
+  }
+
+  /* Post-details mengecil rapi */
+  .post-details {
+    font-size: 13px !important;
+    padding: 16px 16px !important;
+  }
+
+  .post-details h3 {
+    font-size: 16px !important;
+  }
+
+  /* Sidebar berita terbaru */
+  aside.sidebar {
+    margin-top: 20px !important;
+  }
+
+  .news-list .news-info p {
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+  }
+
+  .news-list time {
+    font-size: 11px !important;
+  }
+
+}
+#editor-container img,
+/* AREA QUILL */
+.ql-editor {
+  width: 100%;
+}
+
+/* IMAGE QUILL - FINAL */
+.ql-editor img {
+  display: block;          /* new line */
+  max-width: 100%;         /* ikut div */
+  height: auto;            /* proporsional */
+  margin: 16px auto;       /* CENTER */
+}
+
+/* OPTIONAL: tampilan artikel (view) */
+.article-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 16px auto;
+}
+
+#editor-container,
+#editor-container *,
+.ql-editor {
+  user-select: text !important;
+}
+
+
+  </style>
+  {% include 'css.html' %}
+</head>
+<body>
+{% include 'nav.html' %}
+  <!-- Navbar dan footer tidak diubah sesuai permintaan -->
+   <!-- Section Berita -->
+<section class="news-section" aria-label="Berita Terbaru">
+  <!-- Search bar -->
+  <div class="search-container">
+    <input type="text" class="search-bar" placeholder="Cari nama berita..." id="searchInput" />
+  </div>
+
+  <!-- Container berita -->
+  <div class="news-container" id="newsContainer">
+    {% set lo = 1 %}
+    {% for i in ber | reverse %}
+    <!-- Card berita 1 -->
+    <div class="news-card" data-id="{{loop.index}}" onclick="goToNews('{{i.idpost}}')">
+      <div class="news-image">
+        <img src="{{i.content.cover}}" alt="Berita {{lo}}" />
+      </div>
+      <div class="news-content">
+        <h3 class="news-title"><b>{{i.content.title.upper()}}</b></h3>
+        <p class="news-description">{{ cplk(i.content.isi)|safe}}</p>
+        <p class="news-author">Oleh: Admin</p>
+        <div class="news-meta">
+          <span><i class="fas fa-eye"></i> 123 Views</span>
+          <span><i class="fas fa-calendar"></i> {{i.content.date}}</span>
+          <span><i class="fas fa-tag"></i> {{i.content.tag}}</span>
+        </div>
+      </div>
+    </div>
+    {% set lo = lo + 1 %}
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  /* Section berita */
+  .news-section {
+    max-width: 1180px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+    user-select: none;
+  }
+
+  /* Search bar */
+  .search-container {
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+
+  .search-bar {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.7px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: inset 0 0 6px 2px #f8f8f866;
+    outline-offset: 2px;
+    transition: border-color 0.2s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .search-bar:focus {
+    border-color: #f9b233;
+    box-shadow: 0 0 10px 1px #f9b233cc;
+  }
+
+  /* Container berita */
+  .news-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Card berita */
+  .news-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px 8px rgba(0,0,0,0.05), inset 0 0 25px 4px rgba(255,255,255,0.75);
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideIn 0.6s ease forwards;
+  }
+
+  .news-card:hover,
+  .news-card:focus-visible {
+    box-shadow: 0 4px 20px 4px rgba(0,0,0,0.12), inset 0 0 60px 4px rgba(255,255,255,0.85);
+    transform: translateY(-5px);
+    outline: none;
+  }
+
+  .news-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 0 15px 8px #d5d5d52b;
+    flex-shrink: 0;
+  }
+
+  .news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    user-select: none;
+  }
+
+  .news-content {
+    flex: 1;
+  }
+
+  .news-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    color: #0F615C;
+  }
+
+  .news-description {
+    font-weight: 400;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .news-author {
+    font-weight: 500;
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 10px;
+  }
+
+  .news-meta {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+  }
+
+  .news-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .news-meta i {
+    color: #f9b233;
+    user-select: none;
+  }
+
+  /* Animasi slide in */
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Modal preview */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+  }
+
+  .close:hover {
+    color: #000;
+  }
+
+  .modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #0F615C;
+  }
+
+  .modal-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .modal-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 20px;
+  }
+
+  .modal-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 20px;
+  }
+
+  .read-more-btn {
+    background: #f9b233;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+
+  .read-more-btn:hover {
+    background: #d19b13;
+  }
+
+  /* Responsive */
+  @media(max-width: 600px) {
+    .news-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .news-image {
+      width: 100px;
+      height: 100px;
+    }
+    .news-meta {
+      justify-content: center;
+    }
+    .modal-content {
+      margin: 20% auto;
+      padding: 20px;
+    }
+  }
+</style>
+{% include 'footer.html' %}
+{% include 'script.html' %}
+  <!-- QuillJS scripts -->
+<script>
+  (function () {
+    const path = window.location.pathname;
+
+    // hanya jalan kalau route /berita
+    if (path === "/berita") {
+
+      // HOME → hapus active
+      const homeLink = document.querySelector('.menu a[href="/"]');
+      if (homeLink) {
+        homeLink.classList.remove("active");
+      }
+
+      // BERITA → tambah active
+      const beritaLink = document.querySelector('.menu a[href="/berita"]');
+      if (beritaLink) {
+        beritaLink.classList.add("active");
+      }
+
+      // sidebar mobile (jika ada)
+      const sidebarHome = document.querySelector('.mobile-sidebar a[href="/"]');
+      if (sidebarHome) {
+        sidebarHome.classList.remove("active");
+      }
+
+      const sidebarBerita = document.querySelector('.mobile-sidebar a[href="/berita"]');
+      if (sidebarBerita) {
+        sidebarBerita.classList.add("active");
+      }
+    }
+  })();
+</script>
+
+<script>
+    function goToNews(id) {
+        console.log('ya')
+      window.location.href = `/news/${id}`;
+    }
+  // Fungsi search
+  const searchInput = document.getElementById('searchInput');
+  const newsCards = document.querySelectorAll('.news-card');
+
+  searchInput.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    newsCards.forEach(card => {
+      const title = card.querySelector('.news-title').textContent.toLowerCase();
+      if (title.includes(query)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  // Data berita untuk preview (bisa diganti dengan data dinamis)
+
+
+  // Fungsi show preview
+
+  // Fungsi close preview
+</script>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+      const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          const parentLi = toggle.parentElement;
+          const isOpen = parentLi.classList.contains('open');
+
+          // Tutup semua dropdown lain
+          document.querySelectorAll('.has-dropdown.open').forEach(openLi => {
+            if(openLi !== parentLi) openLi.classList.remove('open');
+            openLi.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+          });
+
+          // Toggle dropdown yang diklik
+          if(!isOpen) {
+            parentLi.classList.add('open');
+            toggle.setAttribute('aria-expanded', 'true');
+          } else {
+            parentLi.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      // Tutup dropdown jika klik di luar menu
+      document.addEventListener('click', (e) => {
+        if(!e.target.closest('.has-dropdown')) {
+          document.querySelectorAll('.has-dropdown.open').forEach(openLi => {
+            openLi.classList.remove('open');
+            openLi.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+          });
+        }
+      });
+
+      // Navbar background change on scroll
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if(window.scrollY > 5) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.add('scrolled');
+        }
+      });
+    });
+    
+  </script>
+  
+</body>
+</html>

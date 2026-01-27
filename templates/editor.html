@@ -1,0 +1,141 @@
+// {% extends "base.html" %}
+{% block title %}Editor Berita - PPM Manggisan{% endblock %}
+
+{% block style %}
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+<style>
+  #toolbar {
+    background: #fff;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  #editor-container {
+    height: 450px;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    background: white;
+  }
+  #preview {
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background: #f9f9f9;
+  }
+  #saveBtn {
+    margin-top: 20px;
+    background: #f9b233;
+    border: none;
+    color: black;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 6px;
+  }
+  #saveBtn:hover {
+    background: #d19b13;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Editor Berita {{ 'Baru' if news_id == 'new' else news_id }}</h2>
+
+<div id="toolbar">
+  <span class="ql-formats">
+    <select class="ql-font"></select>
+    <select class="ql-size"></select>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-bold"></button>
+    <button class="ql-italic"></button>
+    <button class="ql-underline"></button>
+    <button class="ql-strike"></button>
+  </span>
+  <span class="ql-formats">
+    <select class="ql-color"></select>
+    <select class="ql-background"></select>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-script" value="sub"></button>
+    <button class="ql-script" value="super"></button>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-blockquote"></button>
+    <button class="ql-code-block"></button>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-list" value="ordered"></button>
+    <button class="ql-list" value="bullet"></button>
+    <button class="ql-indent" value="-1"></button>
+    <button class="ql-indent" value="+1"></button>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-direction" value="rtl"></button>
+    <select class="ql-align"></select>
+  </span>
+  <span class="ql-formats">
+    <button class="ql-link"></button>
+    <button class="ql-image"></button>
+    <button class="ql-video"></button>
+    <button class="ql-clean"></button>
+  </span>
+</div>
+
+<div id="editor-container"></div>
+
+<button id="saveBtn">Simpan Berita</button>
+
+<h3>Preview Real-Time</h3>
+<div id="preview"></div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+<script>
+
+  var quill = new Quill('#editor-container', {
+    modules: {
+      toolbar: '#toolbar'
+    },
+    theme: 'snow'
+  });
+
+  {% if content %}
+  quill.root.innerHTML = `{{ content | safe }}`;
+  {% endif %}
+
+  var previewEl = document.getElementById('preview');
+
+  function updatePreview() {
+    previewEl.innerHTML = quill.root.innerHTML;
+  }
+
+  quill.on('text-change', updatePreview);
+
+  updatePreview();
+
+  document.getElementById('saveBtn').addEventListener('click', async () => {
+    const content = quill.root.innerHTML;
+    const url = window.location.href;
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({content})
+    });
+
+    const json = await res.json();
+    if(json.status === 'success') {
+      alert('Berita berhasil disimpan!');
+      if("{{ news_id }}" === "new" && json.news_id) {
+        window.location.href = `/admin/news/edit/${json.news_id}`;
+      }
+    } else {
+      alert('Gagal menyimpan berita!');
+    }
+  });
+</script>
+{% endblock %}

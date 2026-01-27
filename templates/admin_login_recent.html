@@ -1,0 +1,32 @@
+<h2>Riwayat Login Admin</h2>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>No</th>
+    <th>Username</th>
+    <th>IP</th>
+    <th>Perangkat</th>
+    <th>User Agent</th>
+    <th>Waktu</th>
+  </tr>
+
+  {% for d in logins %}
+  <tr>
+    <td>{{ loop.index }}</td>
+    <td>{{ d.username }}</td>
+    <td>{{ d.ip }}</td>
+    <td>{{ d.device_type }}</td>
+    <td style="max-width:350px;word-break:break-all">
+      {{ d.user_agent }}
+    </td>
+    <td>{{ d.login_time }}</td>
+  </tr>
+  {% else %}
+  <tr>
+    <td colspan="6">Belum ada riwayat login</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br>
+<a href="/admin">← Kembali ke Dashboard</a>

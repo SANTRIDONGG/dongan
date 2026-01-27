@@ -1,0 +1,237 @@
+<script>
+document.querySelectorAll(".has-dropdown").forEach((box) => {
+    const btn = box.querySelector(".dropdown-btn");
+    if (!btn) return;
+
+    btn.addEventListener("click", function(event) {
+        event.stopPropagation();
+        box.classList.toggle("open");
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const sidebar   = document.getElementById("mobileSidebar");
+  const toggleBtn = document.getElementById("mobileToggle");
+  const closeBtn  = document.querySelector(".sidebar-close");
+
+  // BUKA SIDEBAR
+  toggleBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    sidebar.classList.add("active");
+  });
+
+  // TUTUP SIDEBAR
+  closeBtn.addEventListener("click", function() {
+    sidebar.classList.remove("active");
+  });
+
+  // DROPDOWN MOBILE
+  document.querySelectorAll(".has-dropdown").forEach((item) => {
+      const btn = item.querySelector(".dropdown-btn");
+
+      btn.addEventListener("click", function (e) {
+          e.stopPropagation();        // cegah sidebar close
+          item.classList.toggle("open");
+      });
+  });
+
+  // TUTUP SIDEBAR KETIKA KLIK DILUAR
+  document.addEventListener("click", function(e) {
+
+      // ⛔ JANGAN TUTUP SIDEBAR jika klik DI DALAM sidebar
+      if (sidebar.contains(e.target)) return;
+
+      // ⛔ JANGAN TUTUP jika klik tombol menu
+      if (toggleBtn.contains(e.target)) return;
+
+      // jika klik benar2 diluar → tutup
+      sidebar.classList.remove("active");
+  });
+
+});
+</script>
+
+
+
+
+
+  <script>
+    
+    // Navbar background toggle saat scroll
+    window.addEventListener('scroll', function () {
+      const path = window.location.pathname;
+        const navbar = document.getElementById('navbar');
+      if (path.includes("news")) {
+        navbar.classList.add('scrolled');
+      } else {
+          if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+         } else {
+            navbar.classList.remove('scrolled');
+         }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const section = document.querySelector('.animated-section');
+  const counters = section.querySelectorAll('.stat-number');
+
+  let counted = false;
+
+  // Fungsi animasi count up
+  function animateCount(el, target) {
+    let start = 0;
+    const duration = 2000; // Durasi animasi dalam ms
+    const stepTime = Math.abs(Math.floor(duration / target));
+    const increment = target > 100 ? Math.ceil(target / (duration / 20)) : 1;
+
+    function updateCounter() {
+      start += increment;
+      if (start > target) start = target;
+      el.textContent = start.toLocaleString();
+      if(target === 1983) {
+        el.textContent = start.toString();
+     } else {
+         el.textContent = start.toLocaleString();
+      }
+
+      if (start < target) {
+        requestAnimationFrame(updateCounter);
+      }
+    }
+    updateCounter();
+  }
+
+  // Intersection Observer untuk trigger animasi saat section muncul
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !counted) {
+        section.classList.add('visible');
+        counters.forEach(counter => {
+          const targetNumber = parseInt(counter.getAttribute('data-target'), 10);
+          animateCount(counter, targetNumber);
+        });
+        counted = true;
+        observer.unobserve(section);
+      }
+    });
+  }, {threshold: 0.3}); // saat 30% section terlihat
+
+  observer.observe(section);
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.quote-section .slide');
+  const dots = document.querySelectorAll('.quote-section .dot');
+  const prevBtn = document.querySelector('.quote-section .prev-btn');
+  const nextBtn = document.querySelector('.quote-section .next-btn');
+
+  let currentIndex = 0;
+  let slideInterval;
+  const intervalTime = 5000; // 5 detik
+
+  function setActiveSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+      if(i === index) {
+        slide.setAttribute('aria-hidden', 'false');
+      } else {
+        slide.setAttribute('aria-hidden', 'true');
+      }
+    });
+    currentIndex = index;
+  }
+
+  function showNextSlide() {
+    let nextIndex = currentIndex + 1;
+    if (nextIndex >= slides.length) nextIndex = 0;
+    setActiveSlide(nextIndex);
+  }
+
+  function showPrevSlide() {
+    let prevIndex = currentIndex -1;
+    if (prevIndex < 0) prevIndex = slides.length - 1;
+    setActiveSlide(prevIndex);
+  }
+
+  function startSlideShow() {
+    slideInterval = setInterval(showNextSlide, intervalTime);
+  }
+
+  function resetSlideShow() {
+    clearInterval(slideInterval);
+    startSlideShow();
+  }
+
+  // Event listeners
+  nextBtn.addEventListener('click', () => {
+    showNextSlide();
+    resetSlideShow();
+  });
+  prevBtn.addEventListener('click', () => {
+    showPrevSlide();
+    resetSlideShow();
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      setActiveSlide(i);
+      resetSlideShow();
+    });
+  });
+
+  // Initialize
+  setActiveSlide(0);
+  startSlideShow();
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const parentLi = toggle.parentElement;
+      const isOpen = parentLi.classList.contains('open');
+
+      // Tutup semua dropdown lain
+      document.querySelectorAll('.has-dropdown.open').forEach(openLi => {
+        if(openLi !== parentLi) openLi.classList.remove('open');
+        openLi.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+      });
+
+      // Toggle dropdown yang diklik
+      if(!isOpen) {
+        parentLi.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+      } else {
+        parentLi.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  // Tutup dropdown jika klik di luar menu
+  document.addEventListener('click', (e) => {
+    if(!e.target.closest('.has-dropdown')) {
+      document.querySelectorAll('.has-dropdown.open').forEach(openLi => {
+        openLi.classList.remove('open');
+        openLi.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+});
+// NAVBAR SCROLL BACKGROUND CHANGE
+window.addEventListener("scroll", function () {
+    const navbar = document.getElementById("navbar");
+
+    if (window.scrollY > 20) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
+    }
+});
+
+  </script>

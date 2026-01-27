@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sejarah Ppru</title>
+
+  <!-- Font Awesome untuk ikon -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Reset dan dasar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: #fefefe;
+      color: #333;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    ul {
+      list-style: none;
+    }
+
+    /* --- NAVBAR (Pakailah navbar Anda sebelumnya, jangan diubah di sini) --- */
+    nav#navbar {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      padding: 15px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: transparent;
+      color: white;
+      z-index: 9999;
+      transition: background-color 0.3s ease;
+    }
+    nav#navbar.scrolled {
+      background-color: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+    nav#navbar .logo img {
+      height: 55px;
+      user-select: none;
+      cursor: pointer;
+    }
+    nav#navbar .menu {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      font-size: 16px;
+    }
+    nav#navbar .menu li {
+      position: relative;
+    }
+    nav#navbar .menu a,
+    nav#navbar .dropdown-toggle {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 5px 8px;
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: 16px;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    nav#navbar .menu a:hover,
+    nav#navbar .dropdown-toggle:hover,
+    nav#navbar .menu a.active {
+      color: #f9b233;
+    }
+    nav#navbar .dropdown-menu {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      background-color: #111;
+      border-radius: 5px;
+      min-width: 150px;
+      padding: 10px 0;
+      display: none;
+      z-index: 10000;
+      user-select: none;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+      transition: opacity 0.25s ease;
+    }
+    nav#navbar .dropdown-menu li {
+      padding: 8px 20px;
+    }
+    nav#navbar .dropdown-menu li a {
+      color: white;
+      font-weight: 400;
+    }
+    nav#navbar .dropdown-menu li:hover {
+      background-color: #222;
+    }
+    nav#navbar .has-dropdown.open > .dropdown-menu,
+    nav#navbar .has-dropdown:hover > .dropdown-menu {
+      display: block;
+    }
+    nav#navbar .dropdown-toggle:focus-visible {
+      outline: 2px solid #f9b233;
+      outline-offset: 3px;
+    }
+    nav#navbar .btn-psb {
+      border: 1.5px solid #f9b233;
+      background-color: transparent;
+      color: #f9b233;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 9px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3 ease;
+      user-select: none;
+    }
+    nav#navbar .btn-psb:hover {
+      background-color: #f9b233;
+      color: black;
+    }
+
+    /* Padding atas body supaya konten tidak tertutup navbar */
+    body {
+      padding-top: 75px;
+    }
+    
+    /* --- KONTEN UTAMA --- */
+    main.container {
+      max-width: 1150px;
+      margin: 40px auto 60px;
+      display: flex;
+      gap: 40px;
+      user-select: none;
+    }
+
+    /* Konten berita utama */
+    .main-content {
+      flex: 2.5;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+      padding: 30px 35px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      background-color: #f9f9f9;
+      padding: 14px 25px;
+      border-radius: 6px;
+      margin-bottom: 25px;
+      font-size: 14px;
+      color: #666;
+      user-select: none;
+    }
+    .breadcrumb a {
+      color: #f9b233;
+      user-select: text;
+    }
+    .breadcrumb span {
+      margin: 0 5px;
+      user-select: none;
+    }
+
+    h1.post-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #222;
+      user-select: text;
+    }
+
+    /* Container untuk gambar dan post details, flex untuk letak berdampingan */
+    .post-image-wrapper {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    /* Gambar berita */
+    .post-image {
+      flex: 1 1 620px;
+      max-width: 620px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: inset 0 0 20px 5px #ccc;
+      user-select: none;
+      object-fit: cover;
+    }
+
+    /* Kotak Post Details statis di samping gambar (tidak overlay) */
+    .post-details {
+      flex: 1 1 260px;
+      background: white;
+      border-radius: 12px;
+      padding: 25px 22px;
+      box-shadow: 0 3px 15px rgb(0 0 0 / 0.08);
+      user-select: none;
+      font-size: 14px;
+      color: #444;
+      border: 1px solid #ddd;
+      /* Buat posisi normal, tidak overlay */
+      position: static;
+      min-width: 260px;
+      max-width: 260px;
+      height: fit-content;
+    }
+
+    .post-details h3 {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 18px;
+      color: #222;
+      user-select: none;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 12px;
+    }
+    .post-details div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .post-details div i {
+      color: #f9b233;
+      min-width: 18px;
+    }
+
+    /* Isi teks berita */
+    .post-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #444;
+      white-space: pre-line;
+      user-select: text;
+    }
+
+    /* --- SIDEBAR --- */
+    aside.sidebar {
+      flex: 1;
+      max-width: 320px;
+      user-select: none;
+    }
+    aside.sidebar h3.sidebar-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    aside.sidebar h3.sidebar-title i {
+      color: #f9b233;
+      font-size: 24px;
+    }
+
+    /* Sidebar list berita terbaru */
+    .news-list {
+      list-style: none;
+      font-size: 14px;
+      color: #444;
+    }
+    .news-list li + li {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+    }
+    .news-list li a {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: #444;
+      text-decoration: none;
+    }
+    .news-list img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 8px;
+      user-select: none;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 15px 4px #ddd;
+    }
+    .news-list .news-info {
+      flex: 1;
+      user-select: text;
+    }
+    .news-list .news-info p {
+      margin-bottom: 6px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #222;
+    }
+    .news-list .news-info time {
+      font-size: 12px;
+      color: #999;
+      user-select: text;
+    }
+
+    /* --- FOOTER (pakai footer Anda sendiri, tidak diubah di sini) --- */
+
+    /* Responsive */
+    @media (max-width: 940px) {
+      main.container {
+        flex-direction: column;
+        margin: 30px 15px 50px;
+      }
+      .main-content {
+        width: 100%;
+      }
+      aside.sidebar {
+        max-width: 100%;
+        margin-top: 40px;
+      }
+      .post-image-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+      .post-image {
+        max-width: 100%;
+      }
+      .post-details {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 25px;
+      }
+    }
+    .site-footer {
+  background-color: #222;
+  color: #ddd;
+  padding: 60px 20px 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+.footer-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.footer-about, .footer-links, .footer-contact {
+  flex: 1 1 260px;
+  min-width: 250px;
+}
+
+.footer-logo {
+  height: 50px;
+  margin-bottom: 12px;
+  user-select: none;
+  display: block;
+}
+
+.footer-about p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #bbb;
+  max-width: 320px;
+  user-select: text;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 18px;
+  color: #f9b233;
+  user-select: none;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 14px;
+  user-select: text;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover,
+.footer-links ul li a:focus-visible {
+  color: #f9b233;
+  outline: none;
+}
+
+.footer-contact p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  color: #bbb;
+  user-select: text;
+}
+
+.footer-bottom {
+  margin-top: 40px;
+  border-top: 1px solid #444;
+  padding-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #999;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .footer-about, .footer-links, .footer-contact {
+    min-width: 100%;
+  }
+}
+nav#navbar .mobile-toggle {
+    display: none !important;
+}
+
+#mobileToggle {
+    cursor: pointer;
+    z-index: 999999 !important;
+    position: relative;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .footer-about, .footer-links, .footer-contact {
+    min-width: 100%;
+  }
+  /* ================================
+   MOBILE: NAVBAR HORIZONTAL + SOCIAL 2-COL
+   untuk max-width 600px
+   ================================ */
+/* =======================================================
+   NAVBAR MOBILE (SIDEBAR MENU STYLE)
+=========================================================*/
+@media (max-width: 600px) {
+
+  /* ================= NAVBAR TOP (LOGO + MENU BUTTON) ================ */
+  nav#navbar {
+    background: #000 !important;
+    padding: 10px 14px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: 58px !important;
+    position: fixed !important;
+    top: 0; left: 0;
+    width: 100% !important;
+    z-index: 9999 !important;
+  }
+
+  nav#navbar .logo img {
+    height: 34px !important;
+  }
+
+  /* HIDE DESKTOP MENU ON MOBILE */
+  nav#navbar .menu {
+    display: none !important;
+  }
+
+  /* SHOW MOBILE TOGGLE BUTTON */
+  nav#navbar .mobile-toggle {
+    display: inline-block !important;
+    font-size: 26px !important;
+    color: white !important;
+    cursor: pointer;
+  }
+
+  /* BUTTON PSB (DI BARIS ATAS) */
+  nav#navbar .btn-psb {
+    display: none !important; /* dipindah ke sidebar */
+  }
+
+  /* ================= SIDEBAR ================= */
+  #mobileSidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;               /* disembunyikan */
+    width: 260px;
+    height: 100%;
+    background: #0b0b0b;
+    padding: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+  }
+
+  #mobileSidebar.active {
+    left: 0;   /* slide-in */
+  }
+
+  /* SIDEBAR MENU STYLE */
+  #mobileSidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #mobileSidebar ul li a {
+    display: block;
+    padding: 10px 6px;
+    color: #fff;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* DROPDOWN */
+  #mobileSidebar ul li ul {
+    display: none;
+    padding-left: 12px;
+  }
+
+  #mobileSidebar ul li.open > ul {
+    display: block;
+  }
+
+  #mobileSidebar ul li ul a {
+    font-size: 14px;
+    padding: 8px 4px;
+  }
+
+  /* PSB BUTTON DI SIDEBAR */
+  #mobileSidebar .psb-mobile-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    background: #fbbf24;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+  }
+}
+@media (max-width: 600px) {
+  nav#navbar .mobile-toggle {
+      display: inline-block !important;
+      font-size: 28px;
+      color: #fff;
+  }
+}
+
+  /* SMALLER HERO/SECTIONS spacing */
+  section.hero { padding: 80px 14px 36px !important; }
+  .hero h1 { font-size: 24px !important; }
+  .hero h3 { font-size: 11px !important; }
+  .psb-box { padding: 16px !important; max-width: none !important; width: 100% !important; }
+
+  section { margin-top: 20px !important; margin-bottom: 20px !important; }
+  .container { padding-left: 14px !important; padding-right: 14px !important; }
+
+  /* SOCIAL GRID: 2 kolom di mobile */
+  .social-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .social-card {
+    padding: 12px 8px !important;
+    text-align: center !important;
+    border-radius: 10px !important;
+  }
+
+  .social-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 18px !important;
+    margin: 0 auto 8px auto !important;
+  }
+
+  .social-card h3 { font-size: 12px !important; margin-bottom: 6px !important; }
+  .social-card p { font-size: 11px !important; line-height: 1.25 !important; }
+
+  /* IMAGE & GRID safety */
+  img, .news-img-wrapper img { max-width: 100% !important; height: auto !important; display: block; }
+
+  /* STAT, QUOTE, FOOTER adjustments */
+  .stats-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .slide-photo { width: 70px !important; height: 70px !important; }
+  .quote-text { font-size: 14px !important; padding: 0 8px !important; }
+  .footer-container { flex-direction: column !important; text-align: center !important; gap: 18px !important; }
+
+  /* jika masih muncul overflow, pastikan elemen besar dipaksa wrap */
+  .news-title, .news-desc, .section-title { word-wrap: break-word !important; overflow-wrap: break-word !important; }
+
+}
+
+}
+/* ==========================
+   DESKTOP: mobile button hidden
+========================== */
+nav#navbar .mobile-toggle {
+    display: none !important;
+}
+
+
+/* ============================
+   MOBILE TOGGLE DEFAULT HIDE
+============================ */
+.mobile-toggle {
+    display: none;
+}
+
+/* ============================
+   MOBILE SIDEBAR SYSTEM
+============================ */
+@media(max-width:600px) {
+
+    /* NAVBAR MOBILE */
+    nav#navbar {
+        background:#000 !important;
+        padding:10px 14px !important;
+        height:58px !important;
+        display:flex !important;
+        justify-content:space-between !important;
+        align-items:center !important;
+    }
+
+    /* Show toggle */
+    nav#navbar .mobile-toggle {
+        display:block !important;
+        font-size:28px;
+        color:white;
+        cursor:pointer;
+    }
+
+    /* Hide desktop menu in mobile */
+    nav#navbar .menu,
+    nav#navbar .btn-psb {
+        display:none !important;
+    }
+
+    /* Mobile sidebar override display */
+    #mobileSidebar {
+        display:block !important;
+    }
+
+    #mobileSidebar ul {
+        list-style:none;
+        padding:0;
+    }
+
+    #mobileSidebar ul li button,
+    #mobileSidebar ul li a {
+        display:block;
+        width:100%;
+        background:none;
+        border:none;
+        color:white;
+        padding:8px 4px;
+        font-size:15px;
+        text-align:left;
+        border-bottom:1px solid #222;
+    }
+
+    /* dropdown transition */
+    #mobileSidebar ul li ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.28s ease, padding 0.18s ease;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    #mobileSidebar ul li.open > ul {
+      max-height: 400px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
+    .psb-mobile-btn {
+        margin-top:10px;
+        display:block;
+        background:#f9b233;
+        padding:10px;
+        border-radius:6px;
+        color:black;
+        font-weight:bold;
+        text-align:center;
+    }
+}
+@media(max-width:600px) {
+    #mobileSidebar .has-dropdown > button::after {
+        font-size: 8px;   /* mobile lebih kecil */
+    }
+}
+
+  </style>
+  {% include 'css.html' %}
+</head>
+<body>
+
+  <!-- NAVBAR (gunakan navbar Anda sebelumnya) -->
+{% include 'nav.html' %}
+
+  <main class="container" tabindex="-1">
+    <!-- Konten utama berita -->
+      <section class="maintenance-section" aria-label="Website dalam tahap pengembangan">
+  <div class="maintenance-box">
+    <div class="maintenance-icon" aria-hidden="true">
+      &#10005;
+    </div>
+
+    <p class="maintenance-text">
+      Web sedang dalam tahap pengembangan,<br />
+      silakan kembali lagi lain waktu
+    </p>
+  </div>
+</section>
+<style>
+    /* ================================
+   MAINTENANCE SECTION (CENTER + ANIMASI)
+================================ */
+
+/* SECTION */
+.maintenance-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* BOX */
+.maintenance-box {
+  text-align: center;
+  max-width: 460px;
+  width: 100%;
+  background: #ffffff;
+  padding: 48px 40px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ICON SILANG – ANIMASI LOOP */
+.maintenance-icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 22px;
+
+  border-radius: 50%;
+  border: 3px solid #dc3545;
+  color: #dc3545;
+
+  font-size: 46px;
+  font-weight: 900;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: iconTetot 2.5s ease-in-out infinite;
+}
+
+/* TEXT – BESAR KECIL */
+.maintenance-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  font-weight: 500;
+
+  animation: textPulse 2.2s ease-in-out infinite;
+}
+
+/* KEYFRAMES */
+@keyframes iconTetot {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.08) rotate(90deg); }
+  60%  { transform: scale(0.95) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+@keyframes textPulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.05); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .maintenance-box {
+    padding: 36px 24px;
+  }
+
+  .maintenance-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 36px;
+  }
+
+  .maintenance-text {
+    font-size: 14px;
+  }
+}
+
+</style>
+  </main>
+
+  <!-- FOOTER -->
+{% include 'footer.html' %}
+
+  <!-- Script dropdown navbar & scroll -->
+ {% include 'script.html' %}
+</body>
+</html>
