@@ -3,4 +3,5 @@ gunicorn
 pytz
 requests
 flask
+pymongo
 cloudinary
