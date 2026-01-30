@@ -435,7 +435,10 @@ def tottfvjdfjvf():
 
 @a.route('/public/<id>')
 def yas(id):
-    return send_file('C:/Users/ProBook 430 G8/Documents/webpondok/bahan ex foto/'+id)
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    FOTO_DIR = os.path.join(BASE_DIR, "bahan ex foto")
+    return send_from_directory(FOTO_DIR, id)
+    #return send_file('/bahan ex foto/'+id)
 
 #    nav item  #
 @a.route('/news')
@@ -501,6 +504,7 @@ def evfcrv():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
