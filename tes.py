@@ -365,6 +365,17 @@ def jbsrfu():
     #file.save(filepath)
     ax = ldb()
     nontif('news', 'New Posted', f"Admin membuat berita : {request.form.get('judul')}")
+    db_news.insert_one({'idpost': idpage,
+               'view': 0,
+              'content' :{
+                  'title' : request.form.get('judul'),
+                 'tag' : request.form.get('tag'),
+                  'cover' : rr["secure_url"],
+                  'id_cv' : rr["public_id"],
+                'isi': request.form.get('isi'),
+                'date': tanggal(),
+                }
+    })
     ax.append({'idpost': idpage,
                'view': 0,
               'content' :{
@@ -519,6 +530,7 @@ def evfcrv():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
