@@ -3,5 +3,8 @@ gunicorn
 pytz
 requests
 flask
-pymongo
 cloudinary
+pymongo[srv]>=4.6
+certifi
+dnspython
+
