@@ -1,5 +1,6 @@
 from flask import *
 import os, uuid
+import certifi
 from datetime import timedelta, datetime
 banner = 'Untitled-2.png'
 from pymongo import MongoClient
@@ -15,14 +16,18 @@ def check_mongo(cl, idw):
 
 ######### database pertama / berita  #########
 c1 = MongoClient(
-    f"mongodb+srv://farhans:ikoo@web.do21pri.mongodb.net/?appName=web"
+    f"mongodb+srv://farhans:ikoo@web.do21pri.mongodb.net/?appName=web",tls=True,
+    tlsCAFile=certifi.where(),
+    serverSelectionTimeoutMS=20000
 )
 db1 = c1["pondok"]
 db_news = db1["news"]
 check_mongo(c1, 1)
 ######### database kedua / conf, nontif  #########
 c2 = MongoClient(
-    f"mongodb+srv://ikoo:farhans@web2.ndwn5ag.mongodb.net/?appName=web2"
+    f"mongodb+srv://ikoo:farhans@web2.ndwn5ag.mongodb.net/?appName=web2",tls=True,
+    tlsCAFile=certifi.where(),
+    serverSelectionTimeoutMS=20000
 )
 db2 = c2["pondok"]
 db_conf = db2["configure"]
@@ -30,7 +35,9 @@ db_nontif = db2["nontif"]
 check_mongo(c2, 2)
 ######### database ketiga / galery  #########
 c3 = MongoClient(
-    f"mongodb+srv://farfar:hanshans@web3.hg8xpqu.mongodb.net/?appName=web3"
+    f"mongodb+srv://farfar:hanshans@web3.hg8xpqu.mongodb.net/?appName=web3",tls=True,
+    tlsCAFile=certifi.where(),
+    serverSelectionTimeoutMS=20000
 )
 db3 = c3["pondok"]
 db_galery = db3["galery"]
@@ -494,4 +501,5 @@ def evfcrv():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
