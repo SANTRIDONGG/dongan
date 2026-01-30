@@ -4,7 +4,9 @@ pytz
 requests
 flask
 cloudinary
+bs4
 pymongo[srv]>=4.6
 certifi
 dnspython
+
 
