@@ -413,18 +413,28 @@ def abcd(nm):
 def re():
     global hit_pg1
     hit_pg1 += 1
-    b = ldb()
+    #b = ldb()
+    docs = list(
+    db_news.find()
+    .sort("_id", -1)
+    .limit(3)
+    )
+    print(docs)
     ns = {
-    'n1' : b[len(b) - 1],
-    'n2' : b[len(b) - 2],
-    'n3' : b[len(b) - 3]
+    'n1' : docs[0],
+    'n2' : docs[1],
+    'n3' : docs[2]
     }
     nontif('news', 'Viewer', "tes")
     return render_template('ini.html', ns = ns, cplk = caplek)
 @a.route('/berita')
 def tottfvjdfjvf():
     global caplek
-    ad = ldb()
+    ad = list(
+    db_news.find()
+    .sort("_id", -1)
+    )
+
     bri = {}
     l = 1
     for i in ad:
@@ -509,6 +519,7 @@ def evfcrv():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
