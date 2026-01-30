@@ -449,11 +449,16 @@ def nss():
 def nssdd(idps):
     global hit_pg1
     hit_pg1 += 1
-    b = ldb()
+    docs = list(
+    db_news.find()
+    .sort("_id", -1)
+    .limit(3)
+    )
+    print(docs)
     ns = {
-    'n1' : b[len(b) - 1],
-    'n2' : b[len(b) - 2],
-    'n3' : b[len(b) - 3]
+    'n1' : docs[0],
+    'n2' : docs[1],
+    'n3' : docs[2]
     }
     return render_template('news.html', dt = ldb()[get_index(idps)]['content'], ns = ns, cplk = caplek, n = nontif)
 
@@ -504,6 +509,7 @@ def evfcrv():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
