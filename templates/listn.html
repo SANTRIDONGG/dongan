@@ -756,7 +756,7 @@
   <!-- Container berita -->
   <div class="news-container" id="newsContainer">
     {% set lo = 1 %}
-    {% for i in ber | reverse %}
+    {% for i in ber %}
     <!-- Card berita 1 -->
     <div class="news-card" data-id="{{loop.index}}" onclick="goToNews('{{i.idpost}}')">
       <div class="news-image">
@@ -1131,3 +1131,4 @@
   
 </body>
 </html>
+
