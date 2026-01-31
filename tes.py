@@ -200,7 +200,10 @@ def sdb(data):
         json.dump(data, f, indent=4) 
 
 def get_index(value):
-    data = ldb()   # data = list
+    data = list(
+    db_news.find()
+    .sort("_id", -1)
+    )   # data = list
 
     for index, item in enumerate(data):
         if item.get('idpost') == value:
@@ -475,13 +478,17 @@ def nssdd(idps):
     .sort("_id", -1)
     .limit(3)
     )
+    totol = list(
+    db_news.find()
+    .sort("_id", -1)
+    )
     print(docs)
     ns = {
     'n1' : docs[0],
     'n2' : docs[1],
     'n3' : docs[2]
     }
-    return render_template('news.html', dt = ldb()[get_index(idps)]['content'], ns = ns, cplk = caplek, n = nontif)
+    return render_template('news.html', dt = totol[get_index(idps)]['content'], ns = ns, cplk = caplek, n = nontif)
 
 
 #  profile 
@@ -533,6 +540,7 @@ def yodfc():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
