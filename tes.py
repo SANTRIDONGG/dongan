@@ -525,11 +525,15 @@ def evfcrv():
 )
     return render_template('galery.html', data=ga)
 
+@a.route('/ppdb')
+def yodfc():
+    return redirect(" https://forms.gle/EqHVxx1J9DeZnHZh7")
 #####
 #eror 404
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
