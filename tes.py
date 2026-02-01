@@ -142,6 +142,57 @@ def nontif(a1, a2,a3):
     nontifikasi.insert(0, yy)
     return print ('[nontifikasi] berhasil')
 
+import re
+
+def parse_user_agent(ua: str):
+    ua_l = ua.lower()
+
+    # Device type
+    is_mobile = any(x in ua_l for x in ["android", "iphone", "ipad", "mobile"])
+    device_type = "Mobile" if is_mobile else "Desktop"
+
+    # OS + version
+    os_name = "Unknown"
+    os_version = ""
+
+    m = re.search(r'android\s([\d\.]+)', ua_l)
+    if m:
+        os_name = "Android"
+        os_version = m.group(1)
+    else:
+        m = re.search(r'windows nt\s([\d\.]+)', ua_l)
+        if m:
+            os_name = "Windows"
+            win_map = {
+                "10.0": "10 / 11",
+                "6.3": "8.1",
+                "6.2": "8",
+                "6.1": "7"
+            }
+            os_version = win_map.get(m.group(1), m.group(1))
+
+    # Browser
+    if "edg" in ua_l:
+        browser = "Edge"
+    elif "opr" in ua_l or "opera" in ua_l:
+        browser = "Opera"
+    elif "chrome" in ua_l and "safari" in ua_l:
+        browser = "Chrome"
+    elif "firefox" in ua_l:
+        browser = "Firefox"
+    elif "safari" in ua_l:
+        browser = "Safari"
+    else:
+        browser = "Unknown"
+
+    return {
+        "device_type": device_type,
+        "os": f"{os_name} {os_version}".strip(),
+        "browser": browser
+    }
+
+
+
 def analisa_view(view_lama, view_baru):
     if view_lama == 0:
         return {'s': False, 'v':"0%"}
@@ -433,13 +484,14 @@ def re():
     .sort("_id", -1)
     .limit(3)
     )
+    tse = parse_user_agent(request.headers.get("User-Agent", ""))
     print(docs)
     ns = {
     'n1' : docs[0],
     'n2' : docs[1],
     'n3' : docs[2]
     }
-    nontif('news', 'Viewer', "tes")
+    nontif('news', 'Viewer', f"device : {tse['device_type']}\nos : {tse['os']}\nbrowser : {tse['browser']}")
     return render_template('ini.html', ns = ns, cplk = caplek)
 @a.route('/berita')
 def tottfvjdfjvf():
@@ -540,6 +592,7 @@ def yodfc():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
