@@ -484,14 +484,12 @@ def re():
     .sort("_id", -1)
     .limit(3)
     )
-    tse = parse_user_agent(request.headers.get("User-Agent", ""))
-    print(docs)
+    nontif('news', 'Visited', "+1 Viewer index")
     ns = {
     'n1' : docs[0],
     'n2' : docs[1],
     'n3' : docs[2]
     }
-    nontif('news', 'Viewer', f"device : {tse['device_type']}\nos : {tse['os']}\nbrowser : {tse['browser']}")
     return render_template('ini.html', ns = ns, cplk = caplek)
 @a.route('/berita')
 def tottfvjdfjvf():
@@ -592,6 +590,7 @@ def yodfc():
 @a.errorhandler(404)
 def page_not_found(e):
     return render_template('mainten.html'), 404
+
 
 
 
